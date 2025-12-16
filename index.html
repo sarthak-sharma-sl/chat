@@ -3,118 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galactic Chat</title>
+    <title>Private Chat</title>
     <style>
-        /* --- GALAXY BACKGROUND ANIMATION --- */
-        @keyframes move-background {
-            from { background-position: 0 0; }
-            to { background-position: -10000px 5000px; }
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            height: 100vh;
-            overflow: hidden;
-            background: #000;
-            color: white;
-        }
-
-        /* The Stars Layer */
-        .stars {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: #000 url(http://www.script-tutorials.com/demos/360/images/stars.png) repeat top center;
-            z-index: 0;
-        }
-
-        /* The Twinkle Layer */
-        .twinkling {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: transparent url(http://www.script-tutorials.com/demos/360/images/twinkling.png) repeat top center;
-            z-index: 1;
-            animation: move-background 70s linear infinite;
-            opacity: 0.6;
-        }
-
-        /* Deep Space Gradient Overlay */
-        .nebula {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(10,0,20,0.8), rgba(0,0,0,0.6));
-            z-index: 2;
-        }
-
-        /* --- APP CONTAINER --- */
-        #app {
-            position: relative;
-            z-index: 10; /* Above stars */
-            width: 100%;
-            max-width: 600px;
-            /* Glassmorphism Effect */
-            background: rgba(30, 30, 30, 0.85);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            border-left: 1px solid rgba(255,255,255,0.1);
-            border-right: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        }
+        /* --- CSS STYLING --- */
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #121212; color: white; margin: 0; display: flex; justify-content: center; height: 100vh; }
+        #app { width: 100%; max-width: 600px; background: #1e1e1e; display: flex; flex-direction: column; height: 100%; border-left: 1px solid #333; border-right: 1px solid #333; }
         
         /* Header */
-        header { 
-            padding: 15px; 
-            background: rgba(7, 94, 84, 0.9); 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-        header h1 { margin: 0; font-size: 1.2rem; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        header { padding: 15px; background: #075E54; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        header h1 { margin: 0; font-size: 1.2rem; }
         
         /* Chat Area */
         #messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
         
         /* Message Bubbles */
-        .msg { max-width: 70%; padding: 10px 15px; border-radius: 20px; font-size: 0.95rem; line-height: 1.4; word-wrap: break-word; position: relative; animation: popIn 0.3s ease; }
-        @keyframes popIn { from{transform: scale(0.8); opacity: 0;} to{transform: scale(1); opacity: 1;} }
-        
-        .sent { align-self: flex-end; background-color: #005c4b; border-bottom-right-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .received { align-self: flex-start; background-color: #333; border-bottom-left-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .msg { max-width: 70%; padding: 10px 15px; border-radius: 20px; font-size: 0.95rem; line-height: 1.4; word-wrap: break-word; position: relative; }
+        .sent { align-self: flex-end; background-color: #005c4b; border-bottom-right-radius: 5px; }
+        .received { align-self: flex-start; background-color: #333; border-bottom-left-radius: 5px; }
         .timestamp { font-size: 0.65rem; color: #aaa; text-align: right; margin-top: 5px; }
         
         /* Images in chat */
-        .msg img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; transition: transform 0.2s; }
-        .msg img:hover { transform: scale(1.02); }
+        .msg img { max-width: 100%; border-radius: 10px; margin-top: 5px; cursor: pointer; }
 
         /* Input Area */
-        form { background: rgba(30, 30, 30, 0.95); padding: 10px; display: flex; align-items: center; gap: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-        input[type="text"] { flex: 1; padding: 12px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.1); background: #2c2c2c; color: white; outline: none; transition: background 0.3s; }
-        input[type="text"]:focus { background: #383838; }
-        button { background: #00a884; border: none; padding: 10px 20px; color: white; border-radius: 50%; cursor: pointer; font-weight: bold; transition: transform 0.1s; }
-        button:active { transform: scale(0.95); }
+        form { background: #1e1e1e; padding: 10px; display: flex; align-items: center; gap: 10px; border-top: 1px solid #333; }
+        input[type="text"] { flex: 1; padding: 12px; border-radius: 25px; border: none; background: #2c2c2c; color: white; outline: none; }
+        button { background: #00a884; border: none; padding: 10px 20px; color: white; border-radius: 50%; cursor: pointer; font-weight: bold; }
         
         /* Media Buttons */
         .media-btn { background: none; color: #888; padding: 5px; font-size: 1.2rem; cursor: pointer; transition: color 0.2s; }
-        .media-btn:hover { color: white; text-shadow: 0 0 5px white; }
+        .media-btn:hover { color: white; }
         #fileInput { display: none; }
     </style>
 </head>
 <body>
 
-<div class="stars"></div>
-<div class="twinkling"></div>
-<div class="nebula"></div>
-
 <div id="app">
     <header>
-        <h1 id="chatTitle">✨ Galactic Chat</h1>
+        <h1 id="chatTitle">Private Encrypted Room</h1>
         <small id="status">Connecting...</small>
     </header>
 
@@ -149,44 +75,20 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // --- 2. NOTIFICATION SYSTEM SETUP ---
-    // Embedded "Pop" sound (Base64) to avoid external files
-    const notifSound = new Audio("data:audio/mp3;base64,//uQxAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//uQxAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//uQxAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//uQxAAACAAABAAAAAAKbZmIAAAAAA3Z2YgAAAAABTv/6o4kAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//uQxAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq//uQxAAAAANIAAAAAExBTUUzLjEwMKqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq");
-    
-    function requestNotifPermission() {
-        if (!("Notification" in window)) return;
-        Notification.requestPermission();
-    }
-
-    function triggerNotification(user, text) {
-        // 1. Play Sound
-        notifSound.currentTime = 0;
-        notifSound.play().catch(e => console.log("Audio play failed (interact with page first)"));
-
-        // 2. Browser Notification (if backgrounded)
-        if (Notification.permission === "granted" && document.hidden) {
-            new Notification(`New message from ${user}`, {
-                body: text,
-                icon: "https://cdn-icons-png.flaticon.com/512/1041/1041916.png" // Generic chat icon
-            });
-        }
-    }
-
-    // --- 3. SECURITY CHECK ---
+    // --- 2. SECURITY CHECK ---
     const secretCode = "1234"; // CHANGE THIS PASSWORD!
     const userCode = prompt("Enter the Room Password:");
     
     let username = "Friend";
     
     if (userCode !== secretCode) {
-        document.body.innerHTML = "<h1 style='text-align:center; padding:50px; position:relative; z-index:20;'>⛔ Access Denied</h1>";
+        document.body.innerHTML = "<h1 style='text-align:center; padding:50px;'>⛔ Access Denied</h1>";
     } else {
         username = prompt("What is your name?") || "Anonymous";
         document.getElementById('status').innerText = "Online";
-        requestNotifPermission(); // Ask for permission on login
     }
 
-    // --- 4. SENDING MESSAGES ---
+    // --- 3. SENDING MESSAGES ---
     const form = document.getElementById('chatForm');
     const input = document.getElementById('msgInput');
     const messagesDiv = document.getElementById('messages');
@@ -205,13 +107,14 @@
                 type: 'text'
             });
             input.value = '';
-            input.focus();
         } catch (err) {
             console.error("Error sending:", err);
         }
     });
 
-    // --- 5. HANDLING IMAGES ---
+    // --- 4. HANDLING IMAGES (Base64) ---
+    // Note: For heavy videos, you usually need Firebase Storage. 
+    // This method works for images by converting them to text strings.
     fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -233,48 +136,33 @@
         reader.readAsDataURL(file);
     });
 
-    // --- 6. RECEIVING MESSAGES & NOTIFICATIONS ---
+    // --- 5. RECEIVING MESSAGES (Real-time) ---
     const q = query(collection(db, "chats"), orderBy("timestamp", "asc"));
     
-    // We use a flag to stop notifications from playing on the initial load of old history
-    let isInitialLoad = true;
-
     onSnapshot(q, (snapshot) => {
-        // 'docChanges' lets us know exactly what happened (added, modified, removed)
-        // This is much better for notifications than clearing the whole HTML
-        
-        snapshot.docChanges().forEach((change) => {
-            if (change.type === "added") {
-                const msg = change.doc.data();
-                const div = document.createElement('div');
-                
-                const isMe = msg.user === username;
-                div.className = `msg ${isMe ? 'sent' : 'received'}`;
+        messagesDiv.innerHTML = ""; // Clear current view
+        snapshot.forEach((doc) => {
+            const msg = doc.data();
+            const div = document.createElement('div');
+            
+            // Check if I sent it or Friend sent it
+            const isMe = msg.user === username;
+            div.className = `msg ${isMe ? 'sent' : 'received'}`;
 
-                // Trigger Notification if:
-                // 1. It is NOT the initial history load
-                // 2. The message is NOT from me
-                if (!isInitialLoad && !isMe) {
-                    const previewText = msg.type === 'image' ? "Sent a photo 📷" : msg.text;
-                    triggerNotification(msg.user, previewText);
-                }
-
-                // Render content
-                let content = "";
-                if(msg.type === 'text') {
-                    content = `<strong>${msg.user}</strong><br>${msg.text}`;
-                } else if (msg.type === 'image') {
-                    content = `<strong>${msg.user}</strong><br><img src="${msg.image}" onclick="window.open(this.src)">`;
-                }
-
-                const time = msg.timestamp ? new Date(msg.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '...';
-                div.innerHTML = `${content} <div class="timestamp">${time}</div>`;
-                messagesDiv.appendChild(div);
+            // Render content based on type
+            let content = "";
+            if(msg.type === 'text') {
+                content = `<strong>${msg.user}</strong><br>${msg.text}`;
+            } else if (msg.type === 'image') {
+                content = `<strong>${msg.user}</strong><br><img src="${msg.image}" onclick="window.open(this.src)">`;
             }
+
+            // Timestamp formatting
+            const time = msg.timestamp ? new Date(msg.timestamp.toDate()).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : '...';
+
+            div.innerHTML = `${content} <div class="timestamp">${time}</div>`;
+            messagesDiv.appendChild(div);
         });
-        
-        // After the first batch is processed, set initial load to false
-        isInitialLoad = false;
         
         // Auto scroll to bottom
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
